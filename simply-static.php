@@ -7,11 +7,11 @@ require(dirname(__FILE__).'/vendor/autoload.php');
 
 /**
  * Plugin Name:       Simply Static Github Sync
- * Plugin URI:        http://codeofconduct.co/simply-static-github-sync
+ * Plugin URI:        https://github.com/skycat-me/simply-static-github-sync
  * Description:       Produces a static HTML version of your WordPress install and adjusts URLs accordingly.
  * Version:           2.0.0
- * Author:            Code of Conduct
- * Author URI:        http://codeofconduct.co/
+ * Author:            skycat-mt (based on Code of Conduct)
+ * Author URI:        http://skycat.me
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       simply-static-github-sync
