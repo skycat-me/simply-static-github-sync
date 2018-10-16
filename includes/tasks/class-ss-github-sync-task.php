@@ -45,6 +45,7 @@ class Github_sync_Task extends Task
 
         // remove temporary directory
         $this->delTempDir($this->tmpDir);
+        $this->delTempDir($this->localDir);
 
         $this->save_status_message(__("Github sync complete! ", 'simply-static-github-sync'));
         return true;
@@ -66,8 +67,6 @@ class Github_sync_Task extends Task
             // Setting git config
             $this->repository->execute(array('config', '--local', 'user.name', $this->options->get('github_user')));
             $this->repository->execute(array('config', '--local', 'user.email', $this->options->get('github_email')));
-            // $this->repository->execute('config --local user.name ' . $this->options->get('github_user'));
-            // $this->repository->execute('config --local user.email ' . $this->options->get('github_email'));
         } catch (Exception $e) {
             $this->save_status_message(__($e));
             return false;
@@ -88,7 +87,7 @@ class Github_sync_Task extends Task
     }
 
     /**
-     * Create and set the temporary directory location.
+     * Delete the temporary directory.
      */
     private function delTempDir($dir)
     {
@@ -128,6 +127,9 @@ class Github_sync_Task extends Task
     private function sync()
     {
         $date = date(DATE_ATOM, time());
+
+        // Remove
+        $this->repository->execute(array('rm', '-r', '--ignore-unmatch', './*'));
 
         // Copy
         $this->copyStaticFileToTmpDir($this->localDir, $this->tmpDir);
