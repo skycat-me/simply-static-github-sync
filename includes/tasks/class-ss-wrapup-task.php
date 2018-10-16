@@ -11,7 +11,7 @@ class Wrapup_Task extends Task {
 	public function perform() {
 		if ( $this->options->get( 'delete_temp_files' ) === '1' ) {
 			Util::debug_log( "Deleting temporary files" );
-			$this->save_status_message( __( 'Wrapping up', 'simply-static' ) );
+			$this->save_status_message( __( 'Wrapping up', 'simply-static-github-sync' ) );
 			$deleted_successfully = $this->delete_temp_static_files();
 		} else {
 			Util::debug_log( "Keeping temporary files" );
@@ -35,7 +35,7 @@ class Wrapup_Task extends Task {
 			foreach ( $recursive_iterator as $item ) {
 				$success = $item->isDir() ? rmdir( $item ) : unlink( $item );
 				if ( ! $success ) {
-					$message = sprintf( __( "Could not delete temporary file or directory: %s", 'simply-static' ), $item );
+					$message = sprintf( __( "Could not delete temporary file or directory: %s", 'simply-static-github-sync' ), $item );
 					$this->save_status_message( $message );
 					return true;
 				}
@@ -44,7 +44,7 @@ class Wrapup_Task extends Task {
 			// must make sure to delete the original directory at the end
 			$success = rmdir( $archive_dir );
 			if ( ! $success ) {
-				$message = sprintf( __( "Could not delete temporary file or directory: %s", 'simply-static' ), $archive_dir );
+				$message = sprintf( __( "Could not delete temporary file or directory: %s", 'simply-static-github-sync' ), $archive_dir );
 				$this->save_status_message( $message );
 				return true;
 			}

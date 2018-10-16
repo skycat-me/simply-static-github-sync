@@ -19,14 +19,14 @@ class Transfer_Files_Locally_Task extends Task {
 		list( $pages_processed, $total_pages ) = $this->copy_static_files( $local_dir );
 
 		if ( $pages_processed !== 0 ) {
-			$message = sprintf( __( "Copied %d of %d files", 'simply-static' ), $pages_processed, $total_pages );
+			$message = sprintf( __( "Copied %d of %d files", 'simply-static-github-sync' ), $pages_processed, $total_pages );
 			$this->save_status_message( $message );
 		}
 
 		if ( $pages_processed >= $total_pages ) {
 			if ( $this->options->get( 'destination_url_type' ) == 'absolute' ) {
 				$destination_url = trailingslashit( $this->options->get_destination_url() );
-				$message = __( 'Destination URL:', 'simply-static' ) . ' <a href="' . $destination_url .'" target="_blank">' . $destination_url . '</a>';
+				$message = __( 'Destination URL:', 'simply-static-github-sync' ) . ' <a href="' . $destination_url .'" target="_blank">' . $destination_url . '</a>';
 				$this->save_status_message( $message, 'destination_url' );
 			}
 		}

@@ -2,8 +2,8 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Simply Static 1.5.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/simply-static\n"
+"Project-Id-Version: Simply Static Github Sync 1.5.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/simply-static-github-sync\n"
 "POT-Creation-Date: 2016-06-05 07:09:53+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,192 +24,192 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: includes/class-simply-static-archive-creator.php:249
+#: includes/class-simply-static-github-sync-archive-creator.php:249
 msgid "Unable to create ZIP archive"
 msgstr ""
 
-#: includes/class-simply-static-archive-creator.php:318
-#: includes/class-simply-static-archive-creator.php:325
+#: includes/class-simply-static-github-sync-archive-creator.php:318
+#: includes/class-simply-static-github-sync-archive-creator.php:325
 msgid "Could not delete temporary file or directory: %s"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:287
+#: includes/class-simply-static-github-sync-archive-manager.php:287
 msgid "%s has started generating static files"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:290
+#: includes/class-simply-static-github-sync-archive-manager.php:290
 msgid "Setting up"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:338
+#: includes/class-simply-static-github-sync-archive-manager.php:338
 msgid "Fetched %d of %d pages/files"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:367
+#: includes/class-simply-static-github-sync-archive-manager.php:367
 msgid "ZIP archive created: "
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:368
+#: includes/class-simply-static-github-sync-archive-manager.php:368
 msgid "Click here to download"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:380
+#: includes/class-simply-static-github-sync-archive-manager.php:380
 msgid "Copied %d of %d files"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:389
+#: includes/class-simply-static-github-sync-archive-manager.php:389
 msgid "Destination URL:"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:404
+#: includes/class-simply-static-github-sync-archive-manager.php:404
 msgid "Wrapping up"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:431
+#: includes/class-simply-static-github-sync-archive-manager.php:431
 msgid "Done! Finished in %s"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:441
+#: includes/class-simply-static-github-sync-archive-manager.php:441
 msgid "Cancelled"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:448
+#: includes/class-simply-static-github-sync-archive-manager.php:448
 msgid "An exception occurred: %s"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:458
+#: includes/class-simply-static-github-sync-archive-manager.php:458
 msgid "An error occurred: %s"
 msgstr ""
 
-#: includes/class-simply-static-archive-manager.php:484
+#: includes/class-simply-static-github-sync-archive-manager.php:484
 msgid "Error: %s"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:84
+#: includes/class-simply-static-github-sync-diagnostic.php:84
 msgid "OK"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:84
+#: includes/class-simply-static-github-sync-diagnostic.php:84
 msgid "FAIL"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:96
+#: includes/class-simply-static-github-sync-diagnostic.php:96
 msgid "Checking if Destination URL <code>%s</code> is valid"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:104
+#: includes/class-simply-static-github-sync-diagnostic.php:104
 msgid "Checking if Additional URL <code>%s</code> is valid"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:107
+#: includes/class-simply-static-github-sync-diagnostic.php:107
 msgid "Not a valid URL"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:110
+#: includes/class-simply-static-github-sync-diagnostic.php:110
 msgid "Not a local URL"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:124
+#: includes/class-simply-static-github-sync-diagnostic.php:124
 msgid "Checking if Additional File/Dir <code>%s</code> is valid"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:127
+#: includes/class-simply-static-github-sync-diagnostic.php:127
 msgid "Not a valid path"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:130
+#: includes/class-simply-static-github-sync-diagnostic.php:130
 msgid "Not readable"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:144
+#: includes/class-simply-static-github-sync-diagnostic.php:144
 msgid "Checking if WordPress permalink structure is set"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:153
+#: includes/class-simply-static-github-sync-diagnostic.php:153
 msgid "Checking if web server can read from Temp Files Directory: <code>%s</code>"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:162
+#: includes/class-simply-static-github-sync-diagnostic.php:162
 msgid "Checking if web server can write to Temp Files Directory: <code>%s</code>"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:171
+#: includes/class-simply-static-github-sync-diagnostic.php:171
 msgid "Checking if web server can write to Local Directory: <code>%s</code>"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:179
+#: includes/class-simply-static-github-sync-diagnostic.php:179
 msgid "Checking if MySQL user has <code>DELETE</code> privilege"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:187
+#: includes/class-simply-static-github-sync-diagnostic.php:187
 msgid "Checking if MySQL user has <code>INSERT</code> privilege"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:195
+#: includes/class-simply-static-github-sync-diagnostic.php:195
 msgid "Checking if MySQL user has <code>SELECT</code> privilege"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:203
+#: includes/class-simply-static-github-sync-diagnostic.php:203
 msgid "Checking if MySQL user has <code>CREATE</code> privilege"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:211
+#: includes/class-simply-static-github-sync-diagnostic.php:211
 msgid "Checking if MySQL user has <code>ALTER</code> privilege"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:219
+#: includes/class-simply-static-github-sync-diagnostic.php:219
 msgid "Checking if MySQL user has <code>DROP</code> privilege"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:227
+#: includes/class-simply-static-github-sync-diagnostic.php:227
 msgid "Checking if PHP version >= %s"
 msgstr ""
 
-#: includes/class-simply-static-diagnostic.php:236
+#: includes/class-simply-static-github-sync-diagnostic.php:236
 msgid "Checking for cURL support"
 msgstr ""
 
-#: includes/class-simply-static-url-fetcher.php:22
+#: includes/class-simply-static-github-sync-url-fetcher.php:22
 msgid "Attempting to fetch remote URL: %s"
 msgstr ""
 
-#: includes/class-simply-static-view.php:132
+#: includes/class-simply-static-github-sync-view.php:132
 msgid "Can't find view template: %s"
 msgstr ""
 
-#: includes/class-simply-static-view.php:138
+#: includes/class-simply-static-github-sync-view.php:138
 msgid "Can't find view layout: %s"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-msgid "Simply Static"
+msgid "Simply Static Github Sync"
 msgstr ""
 
-#: includes/class-simply-static.php:229
+#: includes/class-simply-static-github-sync.php:229
 msgid "Generate Static Site"
 msgstr ""
 
-#: includes/class-simply-static.php:230
+#: includes/class-simply-static-github-sync.php:230
 msgid "Generate"
 msgstr ""
 
-#: includes/class-simply-static.php:238
-msgid "Simply Static Settings"
+#: includes/class-simply-static-github-sync.php:238
+msgid "Simply Static Github Sync Settings"
 msgstr ""
 
-#: includes/class-simply-static.php:239
+#: includes/class-simply-static-github-sync.php:239
 msgid "Settings"
 msgstr ""
 
-#: includes/class-simply-static.php:247
-msgid "Simply Static Diagnostics"
+#: includes/class-simply-static-github-sync.php:247
+msgid "Simply Static Github Sync Diagnostics"
 msgstr ""
 
-#: includes/class-simply-static.php:248
+#: includes/class-simply-static-github-sync.php:248
 msgid "Diagnostics"
 msgstr ""
 
-#: includes/class-simply-static.php:358 includes/class-simply-static.php:381
+#: includes/class-simply-static-github-sync.php:358 includes/class-simply-static-github-sync.php:381
 msgid "Settings saved."
 msgstr ""
 
@@ -260,11 +260,11 @@ msgid "%d URLs"
 msgstr ""
 
 #: views/diagnostics.php:7
-msgid "Simply Static &rsaquo; Diagnostics"
+msgid "Simply Static Github Sync &rsaquo; Diagnostics"
 msgstr ""
 
 #: views/generate.php:7
-msgid "Simply Static &rsaquo; Generate"
+msgid "Simply Static Github Sync &rsaquo; Generate"
 msgstr ""
 
 #: views/generate.php:15
@@ -318,7 +318,7 @@ msgid "You are being redirected to %s"
 msgstr ""
 
 #: views/settings.php:7
-msgid "Simply Static &rsaquo; Settings"
+msgid "Simply Static Github Sync &rsaquo; Settings"
 msgstr ""
 
 #: views/settings.php:17
@@ -364,7 +364,7 @@ msgstr ""
 
 #: views/settings.php:63
 msgid ""
-"Saving your static files to a ZIP archive is Simply Static's default "
+"Saving your static files to a ZIP archive is Simply Static Github Sync's default "
 "delivery method. After generating your static files you will be prompted to "
 "download the ZIP archive."
 msgstr ""
@@ -423,7 +423,7 @@ msgstr ""
 
 #: views/settings.php:129
 msgid ""
-"Simply Static will create a static copy of any page it can find a link to, "
+"Simply Static Github Sync will create a static copy of any page it can find a link to, "
 "starting at %s. If you want to create static copies of pages or files that "
 "<em>aren't</em> linked to, add the URLs here (one per line)."
 msgstr ""
@@ -460,7 +460,7 @@ msgid "fancy.pdf"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://codeofconduct.co/simply-static"
+msgid "http://codeofconduct.co/simply-static-github-sync"
 msgstr ""
 
 #. Description of the plugin/theme

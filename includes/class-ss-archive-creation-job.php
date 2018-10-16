@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 
 /**
- * Simply Static archive manager class
+ * Simply Static Github Sync archive manager class
  */
 class Archive_Creation_Job extends \WP_Background_Process {
 
@@ -171,7 +171,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 
 		$this->options->set( 'archive_end_time', $end_time );
 
-		$this->save_status_message( sprintf( __( 'Done! Finished in %s', 'simply-static' ), $time_string ) );
+		$this->save_status_message( sprintf( __( 'Done! Finished in %s', 'simply-static-github-sync' ), $time_string ) );
 		parent::complete();
 	}
 
@@ -287,7 +287,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 	protected function exception_occurred( $exception ) {
 		Util::debug_log( "An exception occurred: " . $exception->getMessage() );
 		Util::debug_log( $exception );
-		$message = sprintf( __( "An exception occurred: %s", 'simply-static' ), $exception->getMessage() );
+		$message = sprintf( __( "An exception occurred: %s", 'simply-static-github-sync' ), $exception->getMessage() );
 		$this->save_status_message( $message, 'error' );
 		return 'cancel';
 	}
@@ -300,7 +300,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 	protected function error_occurred( $wp_error ) {
 		Util::debug_log( "An error occurred: " . $wp_error->get_error_message() );
 		Util::debug_log( $wp_error );
-		$message = sprintf( __( "An error occurred: %s", 'simply-static' ), $wp_error->get_error_message() );
+		$message = sprintf( __( "An error occurred: %s", 'simply-static-github-sync' ), $wp_error->get_error_message() );
 		$this->save_status_message( $message, 'error' );
 		return 'cancel';
 	}
@@ -310,7 +310,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 	 * @return bool
 	 */
 	public function error_handler( $errno, $errstr ) {
-		$message = sprintf( __( "An error occurred: %s", 'simply-static' ), $errstr );
+		$message = sprintf( __( "An error occurred: %s", 'simply-static-github-sync' ), $errstr );
 		Util::debug_log( $message );
 		$this->save_status_message( $message, 'error' );
 
@@ -348,7 +348,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 			$error_message .= ' in <b>' . $error['file'] . '</b>';
 			$error_message .= ' on line <b>' . $error['line'] . '</b>';
 
-			$message = sprintf( __( "Error: %s", 'simply-static' ), $error_message );
+			$message = sprintf( __( "Error: %s", 'simply-static-github-sync' ), $error_message );
 			Util::debug_log( $message );
 			$this->save_status_message( $message, 'error' );
 		}

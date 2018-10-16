@@ -12,11 +12,11 @@ if ( is_array( $this->static_pages ) && count( $this->static_pages ) ) : ?>
 	<table class='widefat striped'>
 		<thead>
 			<tr>
-				<th><?php _e( 'Code', 'simply-static' ); ?></th>
-				<th><?php _e( 'URL', 'simply-static' ); ?></th>
-				<th><?php _e( 'Notes', 'simply-static' ); ?></th>
+				<th><?php _e( 'Code', 'simply-static-github-sync' ); ?></th>
+				<th><?php _e( 'URL', 'simply-static-github-sync' ); ?></th>
+				<th><?php _e( 'Notes', 'simply-static-github-sync' ); ?></th>
 				<?php if ( $num_errors > 0 ) : ?>
-				<th><?php echo sprintf( __( "Errors (%d)", 'simply-static' ), $num_errors ); ?></th>
+				<th><?php echo sprintf( __( "Errors (%d)", 'simply-static-github-sync' ), $num_errors ); ?></th>
 				<?php endif; ?>
 			</tr>
 		</thead>
@@ -35,7 +35,7 @@ if ( is_array( $this->static_pages ) && count( $this->static_pages ) ) : ?>
 						$parent_static_page = $static_page->parent_static_page();
 						if ( $parent_static_page ) {
 							$display_url = Util::get_path_from_local_url( $parent_static_page->url );
-							$msg .= "<a href='" . $parent_static_page->url . "'>" .sprintf( __( 'Found on %s', 'simply-static' ), $display_url ). "</a>";
+							$msg .= "<a href='" . $parent_static_page->url . "'>" .sprintf( __( 'Found on %s', 'simply-static-github-sync' ), $display_url ). "</a>";
 						}
 						if ( $msg !== '' && $static_page->status_message ) {
 							$msg .= '; ';

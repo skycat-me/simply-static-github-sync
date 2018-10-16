@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static utility class
+ * Simply Static Github Sync utility class
  */
 class Util {
 

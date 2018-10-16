@@ -13,7 +13,7 @@ class Setup_Task extends Task {
 	 * @return boolean true this always completes in one run, so returns true
 	 */
 	public function perform() {
-		$message = __( 'Setting up', 'simply-static' );
+		$message = __( 'Setting up', 'simply-static-github-sync' );
 		$this->save_status_message( $message );
 
 		$archive_dir = $this->options->get_archive_dir();
@@ -55,7 +55,7 @@ class Setup_Task extends Task {
 		$origin_url = trailingslashit( Util::origin_url() );
 		Util::debug_log( 'Adding origin URL to queue: ' . $origin_url );
 		$static_page = Page::query()->find_or_initialize_by( 'url', $origin_url );
-		$static_page->set_status_message( __( "Origin URL", 'simply-static' ) );
+		$static_page->set_status_message( __( "Origin URL", 'simply-static-github-sync' ) );
 		$static_page->found_on_id = 0;
 		$static_page->save();
 
@@ -66,7 +66,7 @@ class Setup_Task extends Task {
 				$static_page = Page::query()->find_or_initialize_by( 'url', $url );
 				// setting to 0 for "not found anywhere" since it's either the origin
 				// or something the user specified
-				$static_page->set_status_message( __( "Additional URL", 'simply-static' ) );
+				$static_page->set_status_message( __( "Additional URL", 'simply-static-github-sync' ) );
 				$static_page->found_on_id = 0;
 				$static_page->save();
 			}
@@ -101,7 +101,7 @@ class Setup_Task extends Task {
 						$url = self::convert_path_to_url( $file_name );
 						Util::debug_log( "Adding file " . $file_name . ' to queue as: ' . $url );
 						$static_page = Page::query()->find_or_initialize_by( 'url', $url );
-						$static_page->set_status_message( __( "Additional File/Dir", 'simply-static' ) );
+						$static_page->set_status_message( __( "Additional File/Dir", 'simply-static-github-sync' ) );
 						$static_page->found_on_id = 0;
 						$static_page->save();
 					}

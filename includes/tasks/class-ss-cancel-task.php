@@ -9,7 +9,7 @@ class Cancel_Task extends Task {
 	protected static $task_name = 'cancel';
 
 	public function perform() {
-		$this->save_status_message( __( 'Cancelling job', 'simply-static' ) );
+		$this->save_status_message( __( 'Cancelling job', 'simply-static-github-sync' ) );
 
 		$wrapup_task = new Wrapup_Task();
 		$wrapup_task->perform();

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static options class
+ * Simply Static Github Sync options class
  */
 class Options {
 	/**

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static Model class
+ * Simply Static Github Sync Model class
  *
  * Represents a single database table with accessors for finding, creating, and
  * updating records.

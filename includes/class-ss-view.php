@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static view class
+ * Simply Static Github Sync view class
  */
 class View {
 
@@ -137,13 +137,13 @@ class View {
 
 		// must include a template
 		if ( ! is_readable( $this->template ) ) {
-			return new \WP_Error( 'invalid_template', sprintf( __( "Can't find view template: %s", 'simply-static' ), $this->template ) );
+			return new \WP_Error( 'invalid_template', sprintf( __( "Can't find view template: %s", 'simply-static-github-sync' ), $this->template ) );
 		}
 
 		// layouts are optional. if no layout provided, use the template by itself.
 		if ( $this->layout ) {
 			if ( ! is_readable( $this->layout ) ) {
-				return new \WP_Error( 'invalid_layout', sprintf( __( "Can't find view layout: %s", 'simply-static' ), $this->layout ) );
+				return new \WP_Error( 'invalid_layout', sprintf( __( "Can't find view layout: %s", 'simply-static-github-sync' ), $this->layout ) );
 			} else {
 				// the layout should include the template
 				return $this->layout;

@@ -55,7 +55,7 @@ class Fetch_Urls_Task extends Task {
 			if ( $save_file === false && $follow_urls === false ) {
 				Util::debug_log( "Skipping URL because it is no-save and no-follow" );
 				$static_page->last_checked_at = Util::formatted_datetime();
-				$static_page->set_status_message( __( "Do not save or follow", 'simply-static' ) );
+				$static_page->set_status_message( __( "Do not save or follow", 'simply-static-github-sync' ) );
 				$static_page->save();
 				continue;
 			} else {
@@ -80,7 +80,7 @@ class Fetch_Urls_Task extends Task {
 			$this->handle_200_response( $static_page, $save_file, $follow_urls );
 		}
 
-		$message = sprintf( __( "Fetched %d of %d pages/files", 'simply-static' ), $pages_processed, $total_pages );
+		$message = sprintf( __( "Fetched %d of %d pages/files", 'simply-static-github-sync' ), $pages_processed, $total_pages );
 		$this->save_status_message( $message );
 
 		// if we haven't processed any additional pages, we're done
@@ -109,7 +109,7 @@ class Fetch_Urls_Task extends Task {
 			}
 		} else {
 			Util::debug_log( "Not following URLs from this page" );
-			$static_page->set_status_message( __( "Do not follow", 'simply-static' ) );
+			$static_page->set_status_message( __( "Do not follow", 'simply-static-github-sync' ) );
 		}
 
 		$file = $this->archive_dir . $static_page->file_path;
@@ -127,7 +127,7 @@ class Fetch_Urls_Task extends Task {
 			Util::debug_log( "Not saving this URL; deleting the static file" );
 			unlink( $file ); // delete saved file
 			$static_page->file_path = null;
-			$static_page->set_status_message( __( "Do not save", 'simply-static' ) );
+			$static_page->set_status_message( __( "Do not save", 'simply-static-github-sync' ) );
 		}
 
 		$static_page->save();
@@ -178,7 +178,7 @@ class Fetch_Urls_Task extends Task {
 						$this->set_url_found_on( $static_page, $redirect_url );
 					} else {
 						Util::debug_log( "Not following the redirect URL for this page" );
-						$static_page->set_status_message( __( "Do not follow", 'simply-static' ) );
+						$static_page->set_status_message( __( "Do not follow", 'simply-static-github-sync' ) );
 					}
 					// and update the URL
 					$redirect_url = str_replace( $origin_url, $destination_url, $redirect_url );
@@ -209,7 +209,7 @@ class Fetch_Urls_Task extends Task {
 					}
 				} else {
 					Util::debug_log( "Not creating a redirect page" );
-					$static_page->set_status_message( __( "Do not save", 'simply-static' ) );
+					$static_page->set_status_message( __( "Do not save", 'simply-static-github-sync' ) );
 				}
 
 				$static_page->save();

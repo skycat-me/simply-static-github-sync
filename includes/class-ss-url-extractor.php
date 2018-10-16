@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static URL extractor class
+ * Simply Static Github Sync URL extractor class
  *
  * Note that in addition to extracting URLs this class also makes modifications
  * to the Simply_Static\Url_Response that is passed into it: URLs in the body of

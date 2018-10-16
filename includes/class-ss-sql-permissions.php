@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static SQL Privilege Checker
+ * Simply Static Github Sync SQL Privilege Checker
  *
- * Checks to ensure that the MySQL has permissions needed for Simply Static.
+ * Checks to ensure that the MySQL has permissions needed for Simply Static Github Sync.
  */
 class Sql_Permissions {
 

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static Page class, for tracking the status of pages / static files
+ * Simply Static Github Sync Page class, for tracking the status of pages / static files
  */
 class Page extends Model {
 

@@ -15,8 +15,8 @@ class Create_Zip_Archive_Task extends Task {
 		if ( is_wp_error( $download_url ) ) {
 			return $download_url;
 		} else {
-			$message = __( 'ZIP archive created: ', 'simply-static' );
-			$message .= ' <a href="' . $download_url . '">' . __( 'Click here to download', 'simply-static' ) . '</a>';
+			$message = __( 'ZIP archive created: ', 'simply-static-github-sync' );
+			$message .= ' <a href="' . $download_url . '">' . __( 'Click here to download', 'simply-static-github-sync' ) . '</a>';
 			$this->save_status_message( $message );
 			return true;
 		}
@@ -41,7 +41,7 @@ class Create_Zip_Archive_Task extends Task {
 
 		Util::debug_log( "Creating zip archive" );
 		if ( $zip_archive->create( $files, PCLZIP_OPT_REMOVE_PATH, $archive_dir ) === 0 ) {
-			return new \WP_Error( 'create_zip_failed', __( 'Unable to create ZIP archive', 'simply-static' ) );
+			return new \WP_Error( 'create_zip_failed', __( 'Unable to create ZIP archive', 'simply-static-github-sync' ) );
 		}
 
 		$download_url = get_admin_url( null, 'admin.php' ) . '?' . Plugin::SLUG . '_zip_download=' . basename( $zip_filename );

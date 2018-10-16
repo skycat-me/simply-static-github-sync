@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static Query class
+ * Simply Static Github Sync Query class
  *
  * Used for creating queries for the WordPress database
  */

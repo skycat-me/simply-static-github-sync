@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static Diagnostic class
+ * Simply Static Github Sync Diagnostic class
  *
  * Checks to ensure that the user's server and WP installation meet a set of
  * minimum requirements.
@@ -90,7 +90,7 @@ class Diagnostic {
 				$result = $this->{$test['function']}( $param );
 
 				if ( ! isset( $result['message'] ) ) {
-					$result['message'] = $result['test'] ? __( 'OK', 'simply-static' ) : __( 'FAIL', 'simply-static' );
+					$result['message'] = $result['test'] ? __( 'OK', 'simply-static-github-sync' ) : __( 'FAIL', 'simply-static-github-sync' );
 				}
 
 				$this->results[ $title ][] = $result;
@@ -102,7 +102,7 @@ class Diagnostic {
 		$destination_scheme = $this->options->get( 'destination_scheme' );
 		$destination_host = $this->options->get( 'destination_host' );
 		$destination_url = $destination_scheme . $destination_host;
-		$label = sprintf( __( 'Checking if Destination URL <code>%s</code> is valid', 'simply-static' ), $destination_url );
+		$label = sprintf( __( 'Checking if Destination URL <code>%s</code> is valid', 'simply-static-github-sync' ), $destination_url );
 		return array(
 			'label' => $label,
 			'test' => filter_var( $destination_url, FILTER_VALIDATE_URL ) !== false
@@ -110,13 +110,13 @@ class Diagnostic {
 	}
 
 	public function is_additional_url_valid( $url ) {
-		$label = sprintf( __( 'Checking if Additional URL <code>%s</code> is valid', 'simply-static' ), $url );
+		$label = sprintf( __( 'Checking if Additional URL <code>%s</code> is valid', 'simply-static-github-sync' ), $url );
 		if ( filter_var( $url, FILTER_VALIDATE_URL ) === false ) {
 			$test = false;
-			$message = __( 'Not a valid URL', 'simply-static' );
+			$message = __( 'Not a valid URL', 'simply-static-github-sync' );
 		} else if ( ! Util::is_local_url( $url ) ) {
 			$test = false;
-			$message = __( 'Not a local URL', 'simply-static' );
+			$message = __( 'Not a local URL', 'simply-static-github-sync' );
 		} else {
 			$test = true;
 			$message = null;
@@ -130,13 +130,13 @@ class Diagnostic {
 	}
 
 	public function is_additional_file_valid( $file ) {
-		$label = sprintf( __( 'Checking if Additional File/Dir <code>%s</code> is valid', 'simply-static' ), $file );
+		$label = sprintf( __( 'Checking if Additional File/Dir <code>%s</code> is valid', 'simply-static-github-sync' ), $file );
 		if ( stripos( $file, get_home_path() ) !== 0 && stripos( $file, WP_PLUGIN_DIR ) !== 0 && stripos( $file, WP_CONTENT_DIR ) !== 0 ) {
 			$test = false;
-			$message = __( 'Not a valid path', 'simply-static' );
+			$message = __( 'Not a valid path', 'simply-static-github-sync' );
 		} else if ( ! is_readable( $file ) ) {
 			$test = false;
-			$message = __( 'Not readable', 'simply-static' );;
+			$message = __( 'Not readable', 'simply-static-github-sync' );;
 		} else {
 			$test = true;
 			$message = null;
@@ -150,7 +150,7 @@ class Diagnostic {
 	}
 
 	public function is_permalink_structure_set() {
-		$label = __( 'Checking if WordPress permalink structure is set', 'simply-static' );
+		$label = __( 'Checking if WordPress permalink structure is set', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => strlen( get_option( 'permalink_structure' ) ) !== 0
@@ -159,7 +159,7 @@ class Diagnostic {
 
 	public function is_temp_files_dir_readable() {
 		$temp_files_dir = $this->options->get( 'temp_files_dir' );
-		$label = sprintf( __( "Checking if web server can read from Temp Files Directory: <code>%s</code>", 'simply-static' ), $temp_files_dir );
+		$label = sprintf( __( "Checking if web server can read from Temp Files Directory: <code>%s</code>", 'simply-static-github-sync' ), $temp_files_dir );
 		return array(
 			'label' => $label,
 			'test' => is_readable( $temp_files_dir )
@@ -168,7 +168,7 @@ class Diagnostic {
 
 	public function is_temp_files_dir_writeable() {
 		$temp_files_dir = $this->options->get( 'temp_files_dir' );
-		$label = sprintf( __( "Checking if web server can write to Temp Files Directory: <code>%s</code>", 'simply-static' ), $temp_files_dir );
+		$label = sprintf( __( "Checking if web server can write to Temp Files Directory: <code>%s</code>", 'simply-static-github-sync' ), $temp_files_dir );
 		return array(
 			'label' => $label,
 			'test' => is_writable( $temp_files_dir )
@@ -177,7 +177,7 @@ class Diagnostic {
 
 	public function is_local_dir_writeable() {
 		$local_dir = $this->options->get( 'local_dir' );
-		$label = sprintf( __( "Checking if web server can write to Local Directory: <code>%s</code>", 'simply-static' ), $local_dir );
+		$label = sprintf( __( "Checking if web server can write to Local Directory: <code>%s</code>", 'simply-static-github-sync' ), $local_dir );
 		return array(
 			'label' => $label,
 			'test' => is_writable( $local_dir )
@@ -185,7 +185,7 @@ class Diagnostic {
 	}
 
 	public function user_can_delete() {
-		$label = __( 'Checking if MySQL user has <code>DELETE</code> privilege', 'simply-static' );
+		$label = __( 'Checking if MySQL user has <code>DELETE</code> privilege', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => Sql_Permissions::instance()->can( 'delete' )
@@ -193,7 +193,7 @@ class Diagnostic {
 	}
 
 	public function user_can_insert() {
-		$label = __( 'Checking if MySQL user has <code>INSERT</code> privilege', 'simply-static' );
+		$label = __( 'Checking if MySQL user has <code>INSERT</code> privilege', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => Sql_Permissions::instance()->can( 'insert' )
@@ -201,7 +201,7 @@ class Diagnostic {
 	}
 
 	public function user_can_select() {
-		$label = __( 'Checking if MySQL user has <code>SELECT</code> privilege', 'simply-static' );
+		$label = __( 'Checking if MySQL user has <code>SELECT</code> privilege', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => Sql_Permissions::instance()->can( 'select' )
@@ -209,7 +209,7 @@ class Diagnostic {
 	}
 
 	public function user_can_create() {
-		$label = __( 'Checking if MySQL user has <code>CREATE</code> privilege', 'simply-static' );
+		$label = __( 'Checking if MySQL user has <code>CREATE</code> privilege', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => Sql_Permissions::instance()->can( 'create' )
@@ -217,7 +217,7 @@ class Diagnostic {
 	}
 
 	public function user_can_alter() {
-		$label = __( 'Checking if MySQL user has <code>ALTER</code> privilege', 'simply-static' );
+		$label = __( 'Checking if MySQL user has <code>ALTER</code> privilege', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => Sql_Permissions::instance()->can( 'alter' )
@@ -225,7 +225,7 @@ class Diagnostic {
 	}
 
 	public function user_can_drop() {
-		$label = __( 'Checking if MySQL user has <code>DROP</code> privilege', 'simply-static' );
+		$label = __( 'Checking if MySQL user has <code>DROP</code> privilege', 'simply-static-github-sync' );
 		return array(
 			'label' => $label,
 			'test' => Sql_Permissions::instance()->can( 'drop' )
@@ -233,7 +233,7 @@ class Diagnostic {
 	}
 
 	public function php_version() {
-		$label = sprintf( __( 'Checking if PHP version >= %s', 'simply-static' ), self::$min_version['php'] );
+		$label = sprintf( __( 'Checking if PHP version >= %s', 'simply-static-github-sync' ), self::$min_version['php'] );
 		return array(
 			'label' => $label,
 			'test' => version_compare( phpversion(), self::$min_version['php'], '>=' ),
@@ -242,7 +242,7 @@ class Diagnostic {
 	}
 
 	public function has_curl() {
-		$label = __( 'Checking for cURL support', 'simply-static' );
+		$label = __( 'Checking for cURL support', 'simply-static-github-sync' );
 
 		if ( is_callable( 'curl_version' ) ) {
 			$version = curl_version();

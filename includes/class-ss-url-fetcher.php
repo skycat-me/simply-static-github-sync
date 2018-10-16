@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Simply Static URL fetcher class
+ * Simply Static Github Sync URL fetcher class
  */
 class Url_Fetcher {
 	/**
@@ -74,7 +74,7 @@ class Url_Fetcher {
 		if ( ! Util::is_local_url( $url ) ) {
 			Util::debug_log( "Not fetching URL because it is not a local URL" );
 			$static_page->http_status_code = null;
-			$message = sprintf( __( "An error occurred: %s", 'simply-static' ), __( "Attempted to fetch a remote URL", 'simply-static' ) );
+			$message = sprintf( __( "An error occurred: %s", 'simply-static-github-sync' ), __( "Attempted to fetch a remote URL", 'simply-static-github-sync' ) );
 			$static_page->set_error_message( $message );
 			$static_page->save();
 			return false;
@@ -99,7 +99,7 @@ class Url_Fetcher {
 			Util::debug_log( "We encountered an error when fetching: " . $response->get_error_message() );
 			Util::debug_log( $response );
 			$static_page->http_status_code = null;
-			$message = sprintf( __( "An error occurred: %s", 'simply-static' ), $response->get_error_message() );
+			$message = sprintf( __( "An error occurred: %s", 'simply-static-github-sync' ), $response->get_error_message() );
 			$static_page->set_error_message( $message );
 			$static_page->save();
 			return false;
