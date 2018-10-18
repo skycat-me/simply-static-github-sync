@@ -78,6 +78,7 @@ class Upgrade_Handler
             'github_access_token' => '',
             'github_repository' => '',
             'github_branch' => '',
+            'github_files_to_exclude' => array(),
         );
 
         $save_changes = false;

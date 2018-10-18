@@ -315,6 +315,41 @@ namespace Simply_Static;
 					</tr>
 					<tr>
 						<th>
+							<label for='githubExcludeFiles'><?php _e("Git management files to Exclude", 'simply-static-github-sync');?></label>
+						</th>
+						<td>
+							<?php
+                                $files_to_exclude = $this->github_files_to_exclude;
+                                array_unshift($files_to_exclude, '');
+                            ?>
+							<div id="excludableFileRows">
+							<?php foreach ($files_to_exclude as $index => $file_to_exclude) : ?>
+								<div class='excludable-file-row' <?php if ($index === 0) {
+                                echo "id='excludableFileRowTemplate'";
+                            } ?>>
+									<input type='text' name='github_excludable[<?php echo $index; ?>]' value='<?php echo esc_attr($file_to_exclude); ?>' size='40' />
+									<input class='button remove-excludable-file-row' type='button' name='remove' value='<?php _e("Remove", 'simply-static-github-sync');?>' />
+								</div>
+							<?php endforeach; ?>
+							</div>
+
+							<div>
+								<input class='button' type='button' name='add_github_file_to_exclude' id="AddGithubFileToExclude" value='<?php _e("Add File to Exclude", 'simply-static-github-sync');?>' />
+							</div>
+
+							<div id='excludeFilesHelpBlock' class='help-block'>
+									<p><?php  _e("In this section you can specify Git management files(directories), or parts of a file(directory), to exclude from Github Sync processing. You may also use regex to specify a pattern to match.", 'simply-static-github-sync'); ?></p>
+									<p><?php echo sprintf(
+                                __("Example: <code>%s</code> would exclude <code>%s</code> and other files containing <code>%s</code> from processing", 'simply-static-github-sync'),
+                                    __(".jpg", 'simply-static-github-sync'),
+                                    Util::origin_url() . __("/wp-content/uploads/image.jpg", 'simply-static-github-sync'),
+                                    __(".jpg", 'simply-static-github-sync')
+                            ); ?></p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
 							<label for='githubBranch'><?php _e("Branch", 'simply-static-github-sync');?></label>
 						</th>
 						<td>

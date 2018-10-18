@@ -383,6 +383,7 @@ class Plugin
             ->assign('github_access_token', $this->options->get('github_access_token'))
             ->assign('github_repository', $this->options->get('github_repository'))
             ->assign('github_branch', $this->options->get('github_branch'))
+            ->assign('github_files_to_exclude', $this->options->get('github_files_to_exclude'))
             ->render();
     }
 
@@ -425,6 +426,10 @@ class Plugin
             }
         }
 
+        // Set Files to exclude
+        $github_files_to_exclude = $this->fetch_post_array_value('github_excludable');
+        $github_files_to_exclude = array_filter($github_files_to_exclude, "strlen");
+
         // Set relative path
         $relative_path = $this->fetch_post_value('relative_path');
         $relative_path = untrailingslashit(Util::add_leading_slash($relative_path));
@@ -446,6 +451,7 @@ class Plugin
             ->set('github_access_token', $this->fetch_post_value('github_access_token'))
             ->set('github_repository', $this->fetch_post_value('github_repository'))
             ->set('github_branch', $this->fetch_post_value('github_branch'))
+            ->set('github_files_to_exclude', $github_files_to_exclude)
             ->save();
 
         $message = __('Your changes have been saved.', 'simply-static-github-sync');

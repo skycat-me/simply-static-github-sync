@@ -28,6 +28,7 @@ class Github_sync_Task extends Task
         $this->repositoryPath = $this->options->get('github_repository');
         $this->branchName = $this->options->get('github_branch');
         $this->localDir = $this->options->get('local_dir');
+        $this->filesToExclude = $this->options->get('github_files_to_exclude');
     }
 
     /**
@@ -130,6 +131,10 @@ class Github_sync_Task extends Task
 
         // Remove
         $this->repository->execute(array('rm', '-r', '--ignore-unmatch', './*'));
+
+        // Files not to be synchronized.
+        $this->repository->execute(array('reset', 'HEAD', implode(" ", $this->filesToExclude)));
+        $this->repository->execute(array('checkout', implode(" ", $this->filesToExclude)));
 
         // Copy
         $this->copyStaticFileToTmpDir($this->localDir, $this->tmpDir);
