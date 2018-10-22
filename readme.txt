@@ -1,6 +1,7 @@
 === Simply Static Github Sync ===
-Contributors: codeofconduct
-Tags: html, static website generator, static site, secure, fast
+Contributors: skycat-me, codeofconduct
+Donate link: https://github.com/skycat-me/simply-static-github-sync
+Tags: Simply Static Github Sync, html, static, static site, static site generator, static website generator, performance, fast, optimization, availability, scaling, scalability, cdn, security, secure, zip, hardening, git, github
 Requires at least: 4.0
 Tested up to: 4.9
 Stable tag: 2.1.0
