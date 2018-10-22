@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -63,7 +63,7 @@ class View {
 	/**
 	 * Sets a layout that will be used later in render() method
 	 * @param string $template The template filename, without extension
-	 * @return Simply_Static\View
+	 * @return Simply_Static_Github_Sync\View
 	 */
 	public function set_layout( $layout ) {
 		$this->layout = trailingslashit( $this->path ) . 'layouts/' . $layout . self::EXTENSION;
@@ -74,7 +74,7 @@ class View {
 	/**
 	 * Sets a template that will be used later in render() method
 	 * @param string $template The template filename, without extension
-	 * @return Simply_Static\View
+	 * @return Simply_Static_Github_Sync\View
 	 */
 	public function set_template( $template ) {
 		$this->template = trailingslashit( $this->path ) . $template . self::EXTENSION;
@@ -96,7 +96,7 @@ class View {
 	* Updates the view variable identified by $name with the value provided in $value
 	* @param string $name The variable name
 	* @param mixed  $value The variable value
-	* @return Simply_Static\View
+	* @return Simply_Static_Github_Sync\View
 	*/
 	public function __set( $name, $value ) {
 		$this->variables[ $name ] = $value;
@@ -107,7 +107,7 @@ class View {
 	 * Updates the view variable identified by $name with the value provided in $value
 	 * @param string $name The variable name
 	 * @param mixed $value The variable value
-	 * @return Simply_Static\View
+	 * @return Simply_Static_Github_Sync\View
 	 */
 	public function assign( $name, $value ) {
 		return $this->__set( $name, $value );
@@ -157,7 +157,7 @@ class View {
 	/**
 	 * Renders the view script.
 	 *
-	 * @return Simply_Static\View|\WP_Error
+	 * @return Simply_Static_Github_Sync\View|\WP_Error
 	 */
 	public function render() {
 

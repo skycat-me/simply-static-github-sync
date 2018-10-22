@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Options {
 	/**
 	 * Singleton instance
-	 * @var Simply_Static\Options
+	 * @var Simply_Static_Github_Sync\Options
 	 */
 	protected static $instance = null;
 
@@ -41,8 +41,8 @@ class Options {
 	public function __wakeup() {}
 
 	/**
-	 * Return an instance of Simply_Static\Options
-	 * @return Simply_Static
+	 * Return an instance of Simply_Static_Github_Sync\Options
+	 * @return Simply_Static_Github_Sync
 	 */
 	public static function instance()
 	{
@@ -61,8 +61,8 @@ class Options {
 	}
 
 	/**
-	 * Return a fresh instance of Simply_Static\Options
-	 * @return Simply_Static
+	 * Return a fresh instance of Simply_Static_Github_Sync\Options
+	 * @return Simply_Static_Github_Sync
 	 */
 	public static function reinstance() {
 		self::$instance = null;
@@ -73,7 +73,7 @@ class Options {
 	 * Updates the option identified by $name with the value provided in $value
 	 * @param string $name The option name
 	 * @param mixed $value The option value
-	 * @return Simply_Static\Options
+	 * @return Simply_Static_Github_Sync\Options
 	 */
 	public function set( $name, $value ) {
 		$this->options[ $name ] = $value;

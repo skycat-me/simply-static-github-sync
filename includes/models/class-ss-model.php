@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -103,12 +103,12 @@ class Model {
 	public static function table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'simply_static_' . static::$table_name;
+		return $wpdb->prefix . 'Simply_Static_Github_Sync_' . static::$table_name;
 	}
 
 	/**
 	 * Used for finding models matching certain criteria
-	 * @return Simply_Static\Query
+	 * @return Simply_Static_Github_Sync\Query
 	 */
 	public static function query()
 	{

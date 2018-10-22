@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 ?>
 
 <h1><?php _e( 'Simply Static Github Sync &rsaquo; Generate', 'simply-static-github-sync' ); ?></h1>

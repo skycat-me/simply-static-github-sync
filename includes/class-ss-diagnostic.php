@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,6 +20,10 @@ class Diagnostic {
 		'curl' => '7.15.0'
 	);
 
+	/**
+	 * Assoc. array of categories, and then functions to check
+	 * @var array
+	 */
 	protected $description = array(
 		'URLs' => array(),
 		'Filesystem' => array(
@@ -27,7 +31,8 @@ class Diagnostic {
 			array( 'function' => 'is_temp_files_dir_writeable' )
 		),
 		'WordPress' => array(
-			array( 'function' => 'is_permalink_structure_set' )
+			array( 'function' => 'is_permalink_structure_set' ),
+			array( 'function' => 'can_wp_make_requests_to_itself' )
 		),
 		'MySQL' => array(
 			array( 'function' => 'user_can_delete' ),
@@ -43,12 +48,15 @@ class Diagnostic {
 		)
 	);
 
-	// TODO
+	/**
+	 * Assoc. array of results of the diagnostic check
+	 * @var array
+	 */
 	public $results = array();
 
 	/**
 	 * An instance of the options structure containing all options for this plugin
-	 * @var Simply_Static\Options
+	 * @var Simply_Static_Github_Sync\Options
 	 */
 	protected $options = null;
 
@@ -154,6 +162,37 @@ class Diagnostic {
 		return array(
 			'label' => $label,
 			'test' => strlen( get_option( 'permalink_structure' ) ) !== 0
+		);
+	}
+
+	public function can_wp_make_requests_to_itself() {
+		$ip_address = getHostByName( getHostName() );
+		$label = sprintf( __( "Checking if WordPress can make requests to itself from <code>%s</code>", 'simply-static-github-sync' ), $ip_address );
+
+		$url = Util::origin_url();
+		$response = Url_Fetcher::remote_get( $url );
+
+		if ( is_wp_error( $response ) ) {
+			$test = false;
+			$message = null;
+		} else {
+			$code = $response['response']['code'];
+			if ( $code == 200 ) {
+				$test = true;
+				$message = $code;
+			} else if ( in_array( $code, Page::$processable_status_codes ) ) {
+				$test = false;
+				$message = sprintf( __( "Received a %s response. This might indicate a problem.", 'simply-static-github-sync' ), $code );
+			} else {
+				$test = false;
+				$message = sprintf( __( "Received a %s response.", 'simply-static-github-sync' ), $code );;
+			}
+		}
+
+		return array(
+			'label' => $label,
+			'test' => $test,
+			'message' => $message
 		);
 	}
 

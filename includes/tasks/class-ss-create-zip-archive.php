@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 require_once( ABSPATH . 'wp-admin/includes/class-pclzip.php' );
 

@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -16,7 +16,7 @@ class Upgrade_Handler
 
     /**
      * An instance of the options structure containing all options for this plugin
-     * @var Simply_Static\Options
+     * @var Simply_Static_Github_Sync\Options
      */
     protected static $options = null;
 
@@ -65,7 +65,7 @@ class Upgrade_Handler
             'additional_files' => '',
             'urls_to_exclude' => array(),
             'delivery_method' => 'local',
-            'local_dir' => '/var/www/html/static_files/',
+            'local_dir' => trailingslashit(plugin_dir_path(dirname(__FILE__)) . 'local-static-files'),
             'delete_temp_files' => '1',
             'relative_path' => '',
             'destination_url_type' => 'relative',
@@ -73,6 +73,8 @@ class Upgrade_Handler
             'archive_name' => null,
             'archive_start_time' => null,
             'archive_end_time' => null,
+            'debugging_mode' => '0',
+            'http_basic_auth_digest' => null,
             'github_user' => 'Anonymous User',
             'github_email' => 'anonymous@example.com',
             'github_access_token' => '',
@@ -89,13 +91,13 @@ class Upgrade_Handler
             $save_changes = true;
 
             // checking for legacy options key
-            $old_ss_options = get_option('simply_static');
+            $old_ss_options = get_option('Simply_Static_Github_Sync');
 
             if ($old_ss_options) { // options key changed
                 update_option('simply-static-github-sync', $old_ss_options);
-                delete_option('simply_static');
+                delete_option('Simply_Static_Github_Sync');
 
-                // update Simply_Static\Options again to pull in updated data
+                // update Simply_Static_Github_Sync\Options again to pull in updated data
                 self::$options = new Options();
             }
         }
@@ -150,6 +152,14 @@ class Upgrade_Handler
                             $additional_files = $additional_files . "\n" . $upload_dir;
                             self::$options->set('additional_files', $additional_files);
                         }
+                    }
+                }
+
+                // setting the temp dir back to the one within /simply-static-github-sync/
+                if (version_compare($version, '2.0.4', '<')) {
+                    $old_tmp_dir = trailingslashit(trailingslashit(get_temp_dir()) . 'static-files');
+                    if (self::$options->get('temp_files_dir') === $old_tmp_dir) {
+                        self::$options->set('temp_files_dir', self::$default_options['temp_files_dir']);
                     }
                 }
             }

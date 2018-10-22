@@ -51,7 +51,7 @@
   color: #000;
 }
 
-#sistContainer .button.hide {
+#sistContainer .hide {
   display: none;
 }
 
@@ -182,12 +182,10 @@ select.disabled {
   width: 75%;
 }
 
-#sistContainer #diagnosticsPage td.test {
+#sistContainer #diagnosticsPage td.test.success,
+#sistContainer #diagnosticsPage td.enabled {
   font-weight: bold;
   width: 25%;
-}
-
-#sistContainer #diagnosticsPage td.test.success {
   color: #008000;
 }
 
@@ -196,7 +194,13 @@ select.disabled {
 }
 
 #sistContainer #diagnosticsPage td.test.error {
+  font-weight: bold;
+  width: 25%;
   color: #dc143c;
+}
+
+#sistContainer #diagnosticsPage td.disabled {
+  width: 25%;
 }
 
 #sistContainer #diagnosticsPage td.test.error::before {

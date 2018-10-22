@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 if ( is_array( $this->static_pages ) && count( $this->static_pages ) ) : ?>
 

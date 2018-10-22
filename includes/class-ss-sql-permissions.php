@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +15,7 @@ class Sql_Permissions {
 
 	/**
 	 * Singleton instance
-	 * @var Simply_Static\Sql_Permissions
+	 * @var Simply_Static_Github_Sync\Sql_Permissions
 	 */
 	protected static $instance = null;
 
@@ -52,8 +52,8 @@ class Sql_Permissions {
 	public function __wakeup() {}
 
 	/**
-	 * Return an instance of Simply_Static\Sql_Permissions
-	 * @return Simply_Static\Sql_Permissions
+	 * Return an instance of Simply_Static_Github_Sync\Sql_Permissions
+	 * @return Simply_Static_Github_Sync\Sql_Permissions
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {

@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 class Setup_Task extends Task {
 
@@ -20,6 +20,7 @@ class Setup_Task extends Task {
 
 		// create temp archive directory
 		if ( ! file_exists( $archive_dir ) ) {
+			Util::debug_log( 'Creating archive directory: ' . $archive_dir );
 			$create_dir = wp_mkdir_p( $archive_dir );
 			if ( $create_dir === false ) {
 				return new \WP_Error( 'cannot_create_archive_dir' );
@@ -56,6 +57,8 @@ class Setup_Task extends Task {
 		Util::debug_log( 'Adding origin URL to queue: ' . $origin_url );
 		$static_page = Page::query()->find_or_initialize_by( 'url', $origin_url );
 		$static_page->set_status_message( __( "Origin URL", 'simply-static-github-sync' ) );
+		// setting to 0 for "not found anywhere" since it's either the origin
+		// or something the user specified
 		$static_page->found_on_id = 0;
 		$static_page->save();
 
@@ -64,8 +67,6 @@ class Setup_Task extends Task {
 			if ( Util::is_local_url( $url ) ) {
 				Util::debug_log( 'Adding additional URL to queue: ' . $url );
 				$static_page = Page::query()->find_or_initialize_by( 'url', $url );
-				// setting to 0 for "not found anywhere" since it's either the origin
-				// or something the user specified
 				$static_page->set_status_message( __( "Additional URL", 'simply-static-github-sync' ) );
 				$static_page->found_on_id = 0;
 				$static_page->save();
@@ -90,6 +91,7 @@ class Setup_Task extends Task {
 					Util::debug_log( "File " . $item . ' exists; adding to queue as: ' . $url );
 					$static_page = Page::query()
 						->find_or_create_by( 'url', $url );
+					$static_page->set_status_message( __( "Additional File", 'simply-static-github-sync' ) );
 					// setting found_on_id to 0 since this was user-specified
 					$static_page->found_on_id = 0;
 					$static_page->save();
@@ -101,7 +103,7 @@ class Setup_Task extends Task {
 						$url = self::convert_path_to_url( $file_name );
 						Util::debug_log( "Adding file " . $file_name . ' to queue as: ' . $url );
 						$static_page = Page::query()->find_or_initialize_by( 'url', $url );
-						$static_page->set_status_message( __( "Additional File/Dir", 'simply-static-github-sync' ) );
+						$static_page->set_status_message( __( "Additional Dir", 'simply-static-github-sync' ) );
 						$static_page->found_on_id = 0;
 						$static_page->save();
 					}
@@ -124,7 +126,7 @@ class Setup_Task extends Task {
 		} elseif ( stripos( $path, WP_CONTENT_DIR ) === 0 ) {
 			$url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $path );
 		} elseif ( stripos( $path, get_home_path() ) === 0 ) {
-			$url = str_replace( get_home_path(), Util::origin_url(), $path );
+			$url = str_replace( untrailingslashit( get_home_path() ), Util::origin_url(), $path );
 		}
 		return $url;
 	}

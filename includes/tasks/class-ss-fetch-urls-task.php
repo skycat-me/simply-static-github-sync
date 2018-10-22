@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 class Fetch_Urls_Task extends Task {
 
@@ -89,7 +89,7 @@ class Fetch_Urls_Task extends Task {
 
 	/**
 	 * Process the response for a 200 response (success)
-	 * @param  Simply_Static\Page $static_page Record to update
+	 * @param  Simply_Static_Github_Sync\Page $static_page Record to update
 	 * @param  boolean            $save_file   Save a static copy of the page?
 	 * @param  boolean            $follow_urls Save found URLs to database?
 	 * @return void
@@ -135,7 +135,7 @@ class Fetch_Urls_Task extends Task {
 
 	/**
 	 * Process the response to a 30x redirection
-	 * @param  Simply_Static\Page         $static_page Record to update
+	 * @param  Simply_Static_Github_Sync\Page         $static_page Record to update
 	 * @param  boolean            $save_file   Save a static copy of the page?
 	 * @param  boolean            $follow_urls   Save redirect URL to database?
 	 * @return void
@@ -235,10 +235,10 @@ class Fetch_Urls_Task extends Task {
 	/**
 	 * Set ID for which page a URL was found on (& create page if not in DB yet)
 	 *
-	 * Given a URL, find the associated Simply_Static\Page, and then set the ID
+	 * Given a URL, find the associated Simply_Static_Github_Sync\Page, and then set the ID
 	 * for which page it was found on if the ID isn't yet set or if the record
 	 * hasn't been updated in this instance of static generation yet.
-	 * @param Simply_Static\Page $static_page The record for the parent page
+	 * @param Simply_Static_Github_Sync\Page $static_page The record for the parent page
 	 * @param string             $child_url   The URL of the child page
 	 * @param string             $start_time  Static generation start time
 	 * @return void
@@ -253,7 +253,7 @@ class Fetch_Urls_Task extends Task {
 
 	/**
 	 * Save the contents of a page to a file in our archive directory
-	 * @param Simply_Static\Page $static_page The Simply_Static\Page record
+	 * @param Simply_Static_Github_Sync\Page $static_page The Simply_Static_Github_Sync\Page record
 	 * @param string             $content The content of the page we want to save
 	 * @return string|null                The file path of the saved file
 	 */
