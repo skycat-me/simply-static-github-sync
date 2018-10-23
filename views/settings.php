@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 ?>
 
@@ -84,7 +84,7 @@ namespace Simply_Static;
 							<label for='deliveryMethod'><?php _e("Delivery Method", 'simply-static-github-sync'); ?></label></th>
 						<td>
 							<select name='delivery_method' id='deliveryMethod'>
-								<!-- <option value='zip' <?php Util::selected_if($this->delivery_method === 'zip') ?>><?php _e("ZIP Archive", 'simply-static-github-sync'); ?></option> -->
+								<option value='zip' <?php Util::selected_if($this->delivery_method === 'zip') ?>><?php _e("ZIP Archive", 'simply-static-github-sync'); ?></option>
 								<option value='local' <?php Util::selected_if($this->delivery_method === 'local') ?>><?php _e("Local Directory", 'simply-static-github-sync'); ?></option>
 							</select>
 						</td>
@@ -182,11 +182,13 @@ namespace Simply_Static;
 									<input type='text' name='excludable[<?php echo $index; ?>][url]' value='<?php echo esc_attr($url_to_exclude['url']); ?>' size='40' />
 
 									<label>
+										<input name='excludable[<?php echo $index; ?>][do_not_save]' value='0' type='hidden' />
 										<input name='excludable[<?php echo $index; ?>][do_not_save]' value='1' type='checkbox' <?php Util::checked_if($url_to_exclude['do_not_save'] === '1'); ?> />
 										<?php _e("Do not save", 'simply-static-github-sync'); ?>
 									</label>
 
 									<label>
+										<input name='excludable[<?php echo $index; ?>][do_not_follow]' value='0' type='hidden' />
 										<input name='excludable[<?php echo $index; ?>][do_not_follow]' value='1' type='checkbox' <?php Util::checked_if($url_to_exclude['do_not_follow'] === '1'); ?> />
 										<?php _e("Do not follow", 'simply-static-github-sync'); ?>
 									</label>
@@ -225,6 +227,8 @@ namespace Simply_Static;
 		</div>
 
 		<div id='advanced' class='tab-pane'>
+			<h2 class="title"><?php _e("Temporary Files", 'simply-static-github-sync'); ?></h2>
+			<p><?php _e("Your static files are temporarily saved to a directory before being copied to their destination or creating a ZIP.", 'simply-static-github-sync'); ?></p>
 			<table class='form-table'>
 				<tbody>
 					<tr>
@@ -232,26 +236,74 @@ namespace Simply_Static;
 							<label for='tempFilesDir'><?php _e("Temporary Files Directory", 'simply-static-github-sync');?></label>
 						</th>
 						<td>
-							<?php $example_temp_files_dir = trailingslashit(plugin_dir_path(dirname(__FILE__)) . 'static-files');?>
+							<?php $example_temp_files_dir = trailingslashit(plugin_dir_path(dirname(__FILE__)) . 'static-files'); ?>
 							<input aria-describedby='tempFilesDirHelpBlock' type='text' id='tempFilesDir' name='temp_files_dir' value='<?php echo esc_attr($this->temp_files_dir) ?>' class='widefat' />
 							<div id='tempFilesDirHelpBlock' class='help-block'>
-								<p><?php _e("Your static files (and ZIP archives, if generated) are temporarily saved to this directory. This directory must exist and be writeable.", 'simply-static-github-sync'); ?></p>
+								<p><?php _e("Specify the directory to save your temporary files. This directory must exist and be writeable.", 'simply-static-github-sync'); ?></p>
 								<p><?php echo sprintf(__("Default: <code>%s</code>", 'simply-static-github-sync'), $example_temp_files_dir); ?></p>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<th></th>
+						<th>
+							<label><?php _e("Delete Temporary Files", 'simply-static-github-sync'); ?></label>
+						</th>
 						<td>
 							<label>
+								<input name='delete_temp_files' value='0' type='hidden' />
 								<input aria-describedby='deleteTempFilesHelpBlock' name='delete_temp_files' id='deleteTempFiles' value='1' type='checkbox' <?php Util::checked_if($this->delete_temp_files === '1'); ?> />
-								<?php _e("Delete temporary files", 'simply-static-github-sync'); ?>
+								<?php _e("Delete temporary files at the end of the job", 'simply-static-github-sync'); ?>
 							</label>
-							<p id='deleteTempFilesHelpBlock' class='help-block'>
-								<?php _e("Static files are temporarily saved to the directory above before being copied to their destination. These files can be deleted after the copy process, or you can keep them as a backup.", 'simply-static-github-sync'); ?>
-							</p>
 						</td>
 					</tr>
+				</tbody>
+			</table>
+
+			<h2 class="title"><?php _e("HTTP Basic Authentication", 'simply-static-github-sync'); ?></h2>
+			<p><?php _e("If you've secured WordPress with HTTP Basic Auth you can specify the username and password to use below.", 'simply-static-github-sync'); ?></p>
+			<?php if ($this->http_basic_auth_digest != null) : ?>
+			<table class='form-table' id='basicAuthSet'>
+				<tbody>
+					<tr>
+						<th>
+							<label><?php _e("Basic Auth", 'simply-static-github-sync'); ?></label>
+						</th>
+						<td>
+							<p id='basicAuthCredentialsSaved'><?php _e("Your basic auth credentials have been saved. To disable basic auth or set a new username/password, <a href='#'>click here</a>.", 'simply-static-github-sync'); ?></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<?php endif; ?>
+			<table class='form-table <?php if ($this->http_basic_auth_digest != null) {
+                                echo 'hide';
+                            } ?>' id='basicAuthUserPass'>
+				<tbody>
+					<tr>
+						<th>
+							<label for='basicAuthUsername'><?php _e("Basic Auth Username", 'simply-static-github-sync'); ?></label>
+						</th>
+						<td>
+							<input type='text' id='basicAuthUsername' name='basic_auth_username' value='' <?php if ($this->http_basic_auth_digest != null) {
+                                echo 'disabled';
+                            } ?> />
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label for='basicAuthPassword'><?php _e("Basic Auth Password", 'simply-static-github-sync'); ?></label>
+						</th>
+						<td>
+							<input type='text' id='basicAuthPassword' name='basic_auth_password' value='' <?php if ($this->http_basic_auth_digest != null) {
+                                echo 'disabled';
+                            } ?> />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class='form-table'>
+				<tbody>
 					<tr>
 						<th></th>
 						<td>
@@ -263,6 +315,7 @@ namespace Simply_Static;
 				</tbody>
 			</table>
 		</div>
+
 
 		<div id='github' class='tab-pane'>
 			<table class='form-table'>
@@ -309,7 +362,7 @@ namespace Simply_Static;
 							<input aria-describedby='githubRepositoryHelpBlock' type='text' id='githubRepository' name='github_repository' value='<?php echo esc_attr($this->github_repository) ?>' class='widefat' />
 							<div id='githubRepositoryHelpBlock' class='help-block'>
 								<p><?php _e("Target repository. (user/repository_name)", 'simply-static-github-sync'); ?></p>
-								<p><?php _e("Example: <code>skycat/simply-static-github-sync-github-sync</code>", 'simply-static-github-sync'); ?></p>
+								<p><?php _e("Example: <code>skycat/simply-static-github-sync</code>", 'simply-static-github-sync'); ?></p>
 							</div>
 						</td>
 					</tr>
@@ -399,4 +452,5 @@ namespace Simply_Static;
 		</div>
 
 	</form>
+
 </div>

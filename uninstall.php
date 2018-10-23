@@ -14,4 +14,4 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/models/class-ss-model.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/models/class-ss-page.php';
 
 // Drop the Pages table
-Simply_Static\Page::drop_table();
+Simply_Static_Github_Sync\Page::drop_table();

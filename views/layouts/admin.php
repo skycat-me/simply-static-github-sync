@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 ?>
 
 <?php foreach ( $this->flashes as $flash ) : ?>

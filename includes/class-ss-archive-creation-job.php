@@ -1,12 +1,11 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// require_once( ABSPATH . 'wp-load.php' );
 require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 
 /**
@@ -28,7 +27,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 
 	/**
 	 * An instance of the options structure containing all options for this plugin
-	 * @var Simply_Static\Options
+	 * @var Simply_Static_Github_Sync\Options
 	 */
 	protected $options = null;
 
@@ -48,7 +47,6 @@ class Archive_Creation_Job extends \WP_Background_Process {
 
 		if ( ! $this->is_job_done() ) {
 			register_shutdown_function( array( $this, 'shutdown_handler' ) );
-			set_error_handler( array( $this, 'error_handler' ) );
 		}
 
 		parent::__construct();
@@ -107,7 +105,7 @@ class Archive_Creation_Job extends \WP_Background_Process {
 		Util::debug_log( "Current task: " . $task_name );
 
 		// convert 'an_example' to 'An_Example_Task'
-		$class_name = 'Simply_Static\\' . ucwords( $task_name ) . '_Task';
+		$class_name = 'Simply_Static_Github_Sync\\' . ucwords( $task_name ) . '_Task';
 
 		// this shouldn't ever happen, but just in case...
 		if ( ! class_exists( $class_name ) ) {
@@ -303,27 +301,6 @@ class Archive_Creation_Job extends \WP_Background_Process {
 		$message = sprintf( __( "An error occurred: %s", 'simply-static-github-sync' ), $wp_error->get_error_message() );
 		$this->save_status_message( $message, 'error' );
 		return 'cancel';
-	}
-
-	/**
-	 * Error handler for catchable error reporting
-	 * @return bool
-	 */
-	public function error_handler( $errno, $errstr ) {
-		$message = sprintf( __( "An error occurred: %s", 'simply-static-github-sync' ), $errstr );
-		Util::debug_log( $message );
-		$this->save_status_message( $message, 'error' );
-
-		$this->clear_scheduled_event();
-		$this->unlock_process();
-		$this->cancel_process();
-
-		$end_time = Util::formatted_datetime();
-		$this->options
-			->set( 'archive_end_time', $end_time )
-			->save();
-
-		return false;
 	}
 
 	/**

@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,7 @@ class Url_Fetcher {
 
 	/**
 	 * Singleton instance
-	 * @var Simply_Static\Url_Fetcher
+	 * @var Simply_Static_Github_Sync\Url_Fetcher
 	 */
 	protected static $instance = null;
 
@@ -47,8 +47,8 @@ class Url_Fetcher {
 	public function __wakeup() {}
 
 	/**
-	 * Return an instance of Simply_Static\Url_Fetcher
-	 * @return Simply_Static
+	 * Return an instance of Simply_Static_Github_Sync\Url_Fetcher
+	 * @return Simply_Static_Github_Sync
 	 */
 	public static function instance()
 	{
@@ -62,7 +62,7 @@ class Url_Fetcher {
 
 	/**
 	 * Fetch the URL and return a \WP_Error if we get one, otherwise a Response class.
-	 * @param Simply_Static\Page $static_page URL to fetch
+	 * @param Simply_Static_Github_Sync\Page $static_page URL to fetch
 	 * @return boolean                        Was the fetch successful?
 	 */
 	public function fetch( Page $static_page ) {
@@ -83,14 +83,7 @@ class Url_Fetcher {
 		$temp_filename = wp_tempnam();
 
 		Util::debug_log( "Fetching URL and saving it to: " . $temp_filename );
-		$response = wp_remote_get( $url, array(
-			'timeout' => self::TIMEOUT,
-			'sslverify' => false, // not verifying SSL because all calls are local
-			'redirection' => 0, // disable redirection
-			'blocking' => true, // do not execute code until this call is complete
-			'stream' => true, // stream body content to a file
-			'filename' => $temp_filename
-		) );
+		$response = self::remote_get( $url, $temp_filename );
 
 		$filesize = file_exists( $temp_filename ) ? filesize( $temp_filename ) : 0;
 		Util::debug_log( "Filesize: " . $filesize . ' bytes' );
@@ -124,7 +117,7 @@ class Url_Fetcher {
 			if ( $relative_filename !== null ) {
 				$static_page->file_path = $relative_filename;
 				$file_path = $this->archive_dir . $relative_filename;
-				Util::debug_log( "Renaming temp file" );
+				Util::debug_log( "Renaming temp file from " . $temp_filename . " to " . $file_path );
 				rename( $temp_filename, $file_path );
 			} else {
 				Util::debug_log( "We weren't able to establish a filename; deleting temp file" );
@@ -143,7 +136,7 @@ class Url_Fetcher {
 	 * This will also create directories as needed so that a file could be
 	 * created at the returned file path.
 	 *
-	 * @param Simply_Static\Page $static_page The Simply_Static\Page
+	 * @param Simply_Static_Github_Sync\Page $static_page The Simply_Static_Github_Sync\Page
 	 * @return string|null                The relative file path of the file
 	 */
 	public function create_directories_for_static_page( $static_page ) {
@@ -197,6 +190,29 @@ class Url_Fetcher {
 		}
 
 		return null;
+	}
+
+	public static function remote_get( $url, $filename = null ) {
+		$basic_auth_digest = Options::instance()->get( 'http_basic_auth_digest' );
+
+		$args = array(
+			'timeout'     => self::TIMEOUT,
+			'sslverify'   => apply_filters( 'https_local_ssl_verify', false ),
+			'redirection' => 0, // disable redirection
+			'blocking'    => true // do not execute code until this call is complete
+		);
+
+		if ( $filename ) {
+			$args['stream'] = true; // stream body content to a file
+			$args['filename'] = $filename;
+		}
+
+		if ( $basic_auth_digest ) {
+			$args['headers'] = array( 'Authorization' => 'Basic ' . $basic_auth_digest );
+		}
+
+		$response = wp_remote_get( $url, $args );
+		return $response;
 	}
 
 }

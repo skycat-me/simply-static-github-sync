@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -15,7 +15,7 @@ class Plugin
      * Plugin version
      * @var string
      */
-    const VERSION = '2.0.0';
+    const VERSION = '2.1.0';
 
     /**
      * The slug of the plugin; used in actions, filters, i18n, table names, etc.
@@ -25,25 +25,25 @@ class Plugin
 
     /**
      * Singleton instance
-     * @var Simply_Static
+     * @var Simply_Static_Github_Sync
      */
     protected static $instance = null;
 
     /**
      * An instance of the options structure containing all options for this plugin
-     * @var Simply_Static\Options
+     * @var Simply_Static_Github_Sync\Options
      */
     protected $options = null;
 
     /**
      * View object
-     * @var Simply_Static\View
+     * @var Simply_Static_Github_Sync\View
      */
     protected $view = null;
 
     /**
      * Archive creation process
-     * @var Simply_Static\Archive_Creation_Job
+     * @var Simply_Static_Github_Sync\Archive_Creation_Job
      */
     protected $archive_creation_job = null;
 
@@ -79,7 +79,7 @@ class Plugin
 
     /**
      * Return an instance of the Simply Static Github Sync plugin
-     * @return Simply_Static
+     * @return Simply_Static_Github_Sync
      */
     public static function instance()
     {
@@ -107,7 +107,7 @@ class Plugin
             add_filter('wp_mail_content_type', array( self::$instance, 'filter_wp_mail_content_type' ));
             add_filter('admin_footer_text', array( self::$instance, 'filter_admin_footer_text' ), 15);
             add_filter('update_footer', array( self::$instance, 'filter_update_footer' ), 15);
-
+            add_filter('http_request_args', array( self::$instance, 'wpbp_http_request_args' ), 10, 2);
             add_filter('simplystatic.archive_creation_job.task_list', array( self::$instance, 'filter_task_list' ), 10, 2);
 
             self::$instance->options = Options::instance();
@@ -129,30 +129,31 @@ class Plugin
      */
     private function includes()
     {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/shims.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/libraries/phpuri.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/libraries/PhpSimple/HtmlDomParser.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/libraries/wp-background-processing/wp-background-processing.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-options.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-view.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-url-extractor.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-url-fetcher.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-archive-creation-job.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-setup-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-fetch-urls-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-transfer-files-locally-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-create-zip-archive.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-wrapup-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-cancel-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/tasks/class-ss-github-sync-task.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-query.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/models/class-ss-model.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/models/class-ss-page.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-diagnostic.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-sql-permissions.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-upgrade-handler.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-ss-util.php';
+        $path = plugin_dir_path(dirname(__FILE__));
+        require_once $path . 'includes/shims.php';
+        require_once $path . 'includes/libraries/phpuri.php';
+        require_once $path . 'includes/libraries/PhpSimple/HtmlDomParser.php';
+        require_once $path . 'includes/libraries/wp-background-processing/wp-background-processing.php';
+        require_once $path . 'includes/class-ss-options.php';
+        require_once $path . 'includes/class-ss-view.php';
+        require_once $path . 'includes/class-ss-url-extractor.php';
+        require_once $path . 'includes/class-ss-url-fetcher.php';
+        require_once $path . 'includes/class-ss-archive-creation-job.php';
+        require_once $path . 'includes/tasks/class-ss-task.php';
+        require_once $path . 'includes/tasks/class-ss-setup-task.php';
+        require_once $path . 'includes/tasks/class-ss-fetch-urls-task.php';
+        require_once $path . 'includes/tasks/class-ss-transfer-files-locally-task.php';
+        require_once $path . 'includes/tasks/class-ss-create-zip-archive.php';
+        require_once $path . 'includes/tasks/class-ss-wrapup-task.php';
+        require_once $path . 'includes/tasks/class-ss-cancel-task.php';
+        require_once $path . 'includes/tasks/class-ss-github-sync-task.php';
+        require_once $path . 'includes/class-ss-query.php';
+        require_once $path . 'includes/models/class-ss-model.php';
+        require_once $path . 'includes/models/class-ss-page.php';
+        require_once $path . 'includes/class-ss-diagnostic.php';
+        require_once $path . 'includes/class-ss-sql-permissions.php';
+        require_once $path . 'includes/class-ss-upgrade-handler.php';
+        require_once $path . 'includes/class-ss-util.php';
     }
 
     /**
@@ -177,7 +178,7 @@ class Plugin
         }
 
         if ($this->current_page === 'simply-static-github-sync_settings') {
-            wp_enqueue_script(self::SLUG . '-settings-styles', plugin_dir_url(dirname(__FILE__)) . 'js/admin-settings.js', array(), self::VERSION);
+            wp_enqueue_script(self::SLUG . '-settings-styles', plugin_dir_url(dirname(__FILE__)) . 'js/admin-settings.js?1', array(), self::VERSION);
         }
     }
 
@@ -378,6 +379,7 @@ class Plugin
             ->assign('delete_temp_files', $this->options->get('delete_temp_files'))
             ->assign('destination_url_type', $this->options->get('destination_url_type'))
             ->assign('relative_path', $this->options->get('relative_path'))
+            ->assign('http_basic_auth_digest', $this->options->get('http_basic_auth_digest'))
             ->assign('github_user', $this->options->get('github_user'))
             ->assign('github_email', $this->options->get('github_email'))
             ->assign('github_access_token', $this->options->get('github_access_token'))
@@ -434,6 +436,22 @@ class Plugin
         $relative_path = $this->fetch_post_value('relative_path');
         $relative_path = untrailingslashit(Util::add_leading_slash($relative_path));
 
+        // Set basic auth
+        // Checking $_POST array to see if fields exist. The fields are disabled
+        // if the digest is set, but fetch_post_value() would still return them
+        // as empty strings.
+        if (isset($_POST['basic_auth_username']) && isset($_POST['basic_auth_password'])) {
+            $basic_auth_user = trim($this->fetch_post_value('basic_auth_username'));
+            $basic_auth_pass = trim($this->fetch_post_value('basic_auth_password'));
+
+            if ($basic_auth_user != '' && $basic_auth_pass != '') {
+                $http_basic_auth_digest = base64_encode($basic_auth_user . ':' . $basic_auth_pass);
+            } else {
+                $http_basic_auth_digest = null;
+            }
+            $this->options->set('http_basic_auth_digest', $http_basic_auth_digest);
+        }
+
         // Save settings
         $this->options
             ->set('destination_scheme', $destination_scheme)
@@ -446,6 +464,7 @@ class Plugin
             ->set('local_dir', Util::trailingslashit_unless_blank($this->fetch_post_value('local_dir')))
             ->set('delete_temp_files', $this->fetch_post_value('delete_temp_files'))
             ->set('destination_url_type', $destination_url_type)
+            ->set('relative_path', $relative_path)
             ->set('github_user', $this->fetch_post_value('github_user'))
             ->set('github_email', $this->fetch_post_value('github_email'))
             ->set('github_access_token', $this->fetch_post_value('github_access_token'))
@@ -477,6 +496,12 @@ class Plugin
         $diagnostic = new Diagnostic();
         $results = $diagnostic->results;
 
+        $themes = wp_get_themes();
+        $current_theme = wp_get_theme();
+        $current_theme_name = $current_theme->name;
+
+        $plugins = get_plugins();
+
         $this->view
             ->set_layout('admin')
             ->set_template('diagnostics')
@@ -484,6 +509,9 @@ class Plugin
             ->assign('debug_file_exists', $debug_file_exists)
             ->assign('debug_file_url', $debug_file_url)
             ->assign('results', $results)
+            ->assign('themes', $themes)
+            ->assign('current_theme_name', $current_theme_name)
+            ->assign('plugins', $plugins)
             ->render();
     }
 
@@ -519,18 +547,13 @@ class Plugin
             $zip_filename = $debug_file . '.zip';
             $zip_archive = new \PclZip($zip_filename);
 
-            if ($zip_archive->create($debug_file) === 0) {
+            if ($zip_archive->create($debug_file, PCLZIP_OPT_REMOVE_ALL_PATH) === 0) {
                 $message = __('Unable to create a ZIP of the debug log.', 'simply-static-github-sync');
                 $this->view->add_flash('error', $message);
             } else {
-                $content = '';
+                $content = $this->get_content_for_debug_email();
 
-                ob_start();
-                phpinfo();
-                $phpinfo = ob_get_contents();
-                ob_get_clean();
-
-                $content .= $phpinfo;
+                // file_put_contents( $debug_file . '.html', $content );
 
                 if (wp_mail($email, 'Simply Static Github Sync Debug Log', $content, '', $zip_filename) === true) {
                     $message = sprintf(__('Debug log successfully sent to: %s', 'simply-static-github-sync'), $email);
@@ -543,6 +566,93 @@ class Plugin
                 unlink($zip_filename);
             }
         }
+    }
+
+    /**
+     * Generate the HTML content needed for the debug email
+     * @return string HTML content for the debug email
+     */
+    protected function get_content_for_debug_email()
+    {
+        $content = "<div class='center'>";
+
+        $content .= "<table width='600'>"
+            . "<tr><td><b>URL:</b></td><td>"            . get_bloginfo('url')             . "</td></tr>"
+            . "<tr><td><b>WP URL:</b></td><td>"         . get_bloginfo('wpurl')           . "</td></tr>"
+            . "<tr><td><b>Plugin Version:</b></td><td>" . Plugin::VERSION                   . "</td></tr>"
+            . "<tr><td><b>WP Version:</b></td><td>"     . get_bloginfo('version')         . "</td></tr>"
+            . "<tr><td><b>Multisite:</b></td><td>"      . (is_multisite() ? 'yes' : 'no') . "</td></tr>"
+            . "<tr><td><b>Admin Email:</b></td><td>"    . get_bloginfo('admin_email')     . "</td></tr>"
+            . "</table><br />";
+
+        $content .= "<table width='600'><thead><tr><th>Settings</th></tr></thead><tbody><tr><td><pre>";
+        $options = get_option(Plugin::SLUG);
+        $content .= print_r($options, true);
+        $content .= "</pre></td></tr></tbody></table><br />";
+
+        $diagnostic = new Diagnostic();
+        $results = $diagnostic->results;
+
+        foreach ($results as $title => $tests) {
+            $content .= "<table width='600'><thead><tr><th colspan='2'>" . $title . "</th></tr></thead><tbody>";
+            foreach ($tests as $result) {
+                $content .= "<tr><td>" . $result['label'] . "</td>";
+                if ($result['test']) {
+                    $content .= "<td style='color: #008000; font-weight: bold;'>" . $result['message'] . "</td>";
+                } else {
+                    $content .= "<td style='color: #dc143c; font-weight: bold;'>" . $result['message'] . "</td>";
+                }
+                $content .= "</tr>";
+            }
+            $content .= "</tbody></table><br />";
+        }
+
+        $themes = wp_get_themes();
+        $current_theme = wp_get_theme();
+        $current_theme_name = $current_theme->name;
+
+        $content .= "<table width='600'><thead><tr><th>Theme Name</th><th>Theme URL</th><th>Version</th><th>Enabled</th></tr></thead><tbody>";
+        foreach ($themes as $theme) {
+            $content .= "<tr>";
+            $content .= "<td width='20%'>" . $theme->get('Name') . "</td>";
+            $content .= "<td width='60%'><a href='" . $theme->get('ThemeURI') . "'>" . $theme->get('ThemeURI') . "</a></td>";
+            $content .= "<td width='10%'>" . $theme->get('Version') . "</td>";
+            if ($theme->get('Name') === $current_theme_name) {
+                $content .= "<td width='10%' style='color: #008000; font-weight: bold;'>Yes</td>";
+            } else {
+                $content .= "<td width='10%' style='color: #dc143c; font-weight: bold;'>No</td>";
+            }
+            $content .= "</tr>";
+        }
+        $content .= "</tbody></table><br />";
+
+        $plugins = get_plugins();
+
+        $content .= "<table width='600'><thead><tr><th>Plugin Name</th><th>Plugin URL</th><th>Version</th><th>Enabled</th></tr></thead><tbody>";
+        foreach ($plugins as $plugin_path => $plugin_data) {
+            $content .= "<tr>";
+            $content .= "<td width='20%'>" . $plugin_data[ 'Name' ] . "</td>";
+            $content .= "<td width='60%'><a href='" . $plugin_data[ 'PluginURI' ] . "'>" . $plugin_data[ 'PluginURI' ] . "</a></td>";
+            $content .= "<td width='10%'>" . $plugin_data[ 'Version' ] . "</td>";
+            if (is_plugin_active($plugin_path)) {
+                $content .= "<td width='10%' style='color: #008000; font-weight: bold;'>Yes</td>";
+            } else {
+                $content .= "<td width='10%' style='color: #dc143c; font-weight: bold;'>No</td>";
+            }
+            $content .= "</tr>";
+        }
+        $content .= "</tbody></table><br />";
+
+        $content .= "<br /><br /></div>";
+
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_contents();
+        ob_get_clean();
+
+        $content .= $phpinfo;
+
+        return $content;
     }
 
     /**
@@ -608,6 +718,18 @@ class Plugin
     public function filter_wp_mail_content_type()
     {
         return 'text/html';
+    }
+
+    /**
+     * Set HTTP Basic Auth for wp-background-processing
+     */
+    public function wpbp_http_request_args($r, $url)
+    {
+        $digest = self::$instance->options->get('http_basic_auth_digest');
+        if ($digest) {
+            $r['headers']['Authorization'] = 'Basic ' . $digest;
+        }
+        return $r;
     }
 
     /**
@@ -693,6 +815,7 @@ class Plugin
             header('Content-Description: File Transfer');
             header('Content-Disposition: attachment; filename=' . $file_name);
             header('Content-Type: application/zip, application/octet-stream; charset=' . get_option('blog_charset'), true);
+            header('Content-Length: ' . filesize($file_path));
             header('Pragma: no-cache');
             header('Expires: 0');
             readfile($file_path);

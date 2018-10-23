@@ -3,8 +3,8 @@ Contributors: skycat-me, codeofconduct
 Donate link: https://github.com/skycat-me/simply-static-github-sync
 Tags: Simply Static Github Sync, html, static, static site, static site generator, static website generator, performance, fast, optimization, availability, scaling, scalability, cdn, security, secure, zip, hardening, git, github
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 2.0.0
+Tested up to: 4.9
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Simply Static Github Sync is a static site generator for WordPress that helps yo
 
 = Security =
 
-WordPress is used by one in four websites[1]. That makes it a prime target for hackers. There are a lot of ways that your site can be compromised, but two-thirds of all hacks are caused by vulnerabilities in WordPress plugins, themes, and core files[2].
+WordPress is used by [one in four websites](http://venturebeat.com/2015/11/08/wordpress-now-powers-25-of-the-web/). That makes it a prime target for hackers. There are a lot of ways that your site can be compromised, but two-thirds of all hacks are caused by [vulnerabilities in WordPress plugins, themes, and core files](https://www.wordfence.com/blog/2016/03/attackers-gain-access-wordpress-sites/).
 
 Keeping WordPress secure requires constant vigilance. Exploits are being found for WordPress themes and plugins every day. Even WordPress itself has critical vulnerabilities from time to time. If you don’t stay on top of updates, your site *will* get hacked. It’s just a matter of when.
 
@@ -32,8 +32,13 @@ With Simply Static Github Sync, you’re creating a static copy of all of your W
 
 Depending on the complexity of your site, theme, and plugins, using a static site can easily increase the performance of your site by 10x.
 
-[1] http://venturebeat.com/2015/11/08/wordpress-now-powers-25-of-the-web/
-[2] https://www.wordfence.com/blog/2016/03/attackers-gain-access-wordpress-sites/
+= Other Similar Plugins =
+
+In the event that Simply Static Github Sync doesn't meet your needs, give this plugin a try:
+
+- [WP Static HTML Output](https://wordpress.org/plugins/static-html-output-plugin/)
+
+It's updated regularly and the author is responsive to support requests.
 
 == Installation ==
 
@@ -97,9 +102,55 @@ No. We haven't done any testing on Windows and, based on user feedback, it seems
 
 == Changelog ==
 
-= 2.0.0, January 01, 2017 =
+= 2.1.0, May 12, 2017 =
 
-* TODO
+* New: Added the ability to set a user/pass for HTTP Basic Authentication
+
+= 2.0.7, April 7, 2017 =
+
+* Fix: Non-latin characters should no longer get converted to HTML entities (thanks xi80r6!)
+
+= 2.0.6, April 4, 2017 =
+
+* Fix: Simply Static Github Sync should now display a useful error message when using PHP <5.3
+
+= 2.0.5, March 25, 2017 =
+
+* Fix: Fix for downloading 0-byte ZIPs (no Content-Length header)
+
+= 2.0.4, March 25, 2017 =
+
+* Fix: Moving the default temp files directory back to within the plugin
+
+= 2.0.3, March 16, 2017 =
+
+* Fix: Protocol-relative URLs now work again
+
+= 2.0.2, January 18, 2017 =
+
+* Fix: Individual additional files are now properly included in static file generation
+* New: Added a diagnostics check to ensure that WordPress can make calls to itself
+
+= 2.0.1, January 15, 2017 =
+
+* Fix: Removed Simply Static Github Sync's new error catching; was catching errors in other plugins
+
+= 2.0.0, January 14, 2017 =
+
+* New: New logo/icon (thanks Hajo!)
+* New: Generate static files without having to stay on the Generate page (a job runs in the background)
+* New: Added the ability to specify URLs (or parts of URLs) to exclude from static file generation
+* New: Added a debugging mode with the ability to create/email a debug log
+* New: Added the ability to reset the plugin settings back to their defaults
+* New: Future versions will be able to downgrade to 2.0.0 (by overwriting files) without errors
+* New: Friendly error message if trying to use Simply Static Github Sync with PHP < 5.3
+* New: Added support for Accelerated Mobile Pages (AMP) HTML attributes
+* Fix: URLs containing the WP URL as a query param will rewrite the param with the new URL
+* Fix: Non-WP URLs in the Additional URLs section no longer cause Simply Static Github Sync to hang
+* Fix: Zip creation will no longer throw errors when trying to process 0 byte files
+* Fix: Fixed an issue that could cause Simply Static Github Sync to not remove all files when uninstalling
+* Fix: Local directories are now always chmod'd to 0755 so that they're readable
+* Fix: Additional errors will be caught and displayed when generating static files
 
 = 1.8.0, November 01, 2016 =
 

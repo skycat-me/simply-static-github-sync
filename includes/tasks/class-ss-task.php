@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 abstract class Task {
 
@@ -11,7 +11,7 @@ abstract class Task {
 
 	/**
 	 * An instance of the options structure containing all options for this plugin
-	 * @var Simply_Static\Options
+	 * @var Simply_Static_Github_Sync\Options
 	 */
 	protected $options = null;
 

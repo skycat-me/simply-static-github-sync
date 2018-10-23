@@ -1,5 +1,5 @@
 <?php
-namespace Simply_Static;
+namespace Simply_Static_Github_Sync;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Query {
 	/**
-	 * @var Simply_Static\Model
+	 * @var Simply_Static_Github_Sync\Model
 	 */
 	protected $model;
 
@@ -40,7 +40,7 @@ class Query {
 	protected $order = null;
 
 	/**
-	 * @param Simply_Static\Model $model
+	 * @param Simply_Static_Github_Sync\Model $model
 	 */
 	public function __construct( $model ) {
 		$this->model = $model;

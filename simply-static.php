@@ -9,8 +9,8 @@ require(dirname(__FILE__).'/vendor/autoload.php');
  * Plugin Name:       Simply Static Github Sync
  * Plugin URI:        https://github.com/skycat-me/simply-static-github-sync
  * Description:       Produces a static HTML version of your WordPress install and adjusts URLs accordingly.
- * Version:           2.0.0
- * Author:            skycat-mt (based on Code of Conduct)
+ * Version:           2.1.0
+ * Author:            skycat-mt (based on Code of Code of Conduct LLC)
  * Author URI:        http://skycat.me
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -34,7 +34,7 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
         deactivate_plugins(__FILE__);
     }
 } else {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-ss-plugin.php';
-
-    Simply_Static\Plugin::instance();
+    // Loading up Simply Static Github Sync in a separate file so that there's nothing to
+    // trigger a PHP error in this file (e.g. by using namespacing)
+    require_once plugin_dir_path(__FILE__) . 'includes/load.php';
 }
